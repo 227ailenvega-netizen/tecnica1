@@ -192,7 +192,7 @@ th {
     background-color: rgba(145, 112, 79, 0.9);
 }
 
-/* ---------------- RESPONSIVE PARA CELULAR ---------------- */
+
 @media (max-width: 768px) {
     .container {
         width: 90% !important;
@@ -248,7 +248,7 @@ th {
 
 <div class="pantalla" id="pantallaBienvenida">
     <video class="fondo" autoplay muted loop>
-        <source src="img/istockphoto-1253555354-640_adpp_is (1).mp4" type="video/mp4">
+        <source src="tp.html/img/istockphoto-1253555354-640_adpp_is (1).mp4" type="video/mp4">
     </video>
     <div class="container" style="text-align:center;">
         <h1>Bienvenido/a al Pañol - Escuela Técnica N°1</h1>
@@ -271,7 +271,7 @@ th {
 
 <div class="pantalla" id="crearUsuario">
     <video class="fondo" autoplay muted loop>
-        <source src="img/istockphoto-1253555354-640_adpp_is (1).mp4" type="video/mp4">
+        <source src="tp.html/img/istockphoto-1253555354-640_adpp_is (1).mp4" type="video/mp4">
     </video>
     <div class="container">
         <h1>Crear Usuario</h1>
@@ -288,7 +288,7 @@ th {
 
 <div class="pantalla" id="iniciarSesion">
     <video class="fondo" autoplay muted loop>
-        <source src="img/istockphoto-1253555354-640_adpp_is (1).mp4" type="video/mp4">
+        <source src="tp.html/img/istockphoto-1253555354-640_adpp_is (1).mp4" type="video/mp4">
     </video>
     <div class="container">
         <h1>Iniciar Sesión</h1>
@@ -320,7 +320,7 @@ th {
         <input type="text" id="curso" placeholder="Curso o grupo">
         <div id="prestamoItems"></div>
         <button onclick="agregarFila()">➕ Agregar herramienta</button>
-        <button onclick="guardarPrestamo()">💾 Guardar préstamo</button>
+        <button onclick="guardarPrestamo()">💾 Guardar prestamo</button>
         <h3>Préstamos guardados</h3>
         <div id="listaPrestamos"></div>
     </div>
@@ -382,7 +382,17 @@ function mostrarPantalla(id){
     }
 }
 
-function seleccionarTipo(tipo){ tipoUsuario = tipo; mostrarPantalla("crearUsuario"); }
+function seleccionarTipo(tipo) {
+    tipoUsuario = tipo; 
+    mostrarPantalla("crearUsuario"); 
+
+ 
+    document.getElementById("nombreUsuario").value = "";
+    document.getElementById("nombre").value = "";
+    document.getElementById("apellido").value = "";
+    document.getElementById("edad").value = "";
+    document.getElementById("password").value = "";
+}
 function obtenerUsuarios(tipo){
     const clave = tipo==="docente" ? "usuariosDocentes" : "usuariosAlumnos";
     return JSON.parse(localStorage.getItem(clave) || "[]");
@@ -416,7 +426,7 @@ function iniciarSesion() {
     }
 
     if (!tipoUsuario) {
-        alert("Primero seleccioná si sos docente o alumno.");
+        alert("Primero selecciona si sos docente o alumno.");
         mostrarPantalla("pantallaTipo");
         return;
     }
@@ -455,11 +465,11 @@ function iniciarSesion() {
 }
 
 function borrarUsuario(){
-    if(!tipoUsuario){ alert("No se detectó tipo de usuario."); return; }
+    if(!tipoUsuario){ alert("No se detecto tipo de usuario."); return; }
     const usuarios=obtenerUsuarios(tipoUsuario);
-    const nombreUsuarioActual=prompt("Escribí el nombre de usuario que querés borrar:");
+    const nombreUsuarioActual=prompt("Escribi el nombre de usuario que queres borrar:");
     const nuevosUsuarios=usuarios.filter(u=>u.nombreUsuario!==nombreUsuarioActual);
-    if(usuarios.length===nuevosUsuarios.length){ alert("No se encontró ese usuario."); return; }
+    if(usuarios.length===nuevosUsuarios.length){ alert("No se encontro ese usuario."); return; }
     guardarUsuarios(tipoUsuario,nuevosUsuarios);
     alert("Usuario eliminado correctamente.");
     mostrarPantalla("pantallaTipo");
@@ -521,7 +531,7 @@ function guardarPrestamo() {
         return;
     }
     if (items.some(i => !i.nombre || !i.cantidad || i.cantidad <= 0)) {
-        alert("Selecciona herramienta y cantidad válida.");
+        alert("Selecciona herramienta y cantidad valida.");
         return;
     }
 
@@ -566,7 +576,7 @@ function renderPrestamos(){
     cont.innerHTML="";
     const prestamos=JSON.parse(localStorage.getItem("prestamos")||"[]");
     if(prestamos.length===0){
-        cont.innerHTML="<p>No hay préstamos registrados.</p>";
+        cont.innerHTML="<p>No hay prestamos registrados.</p>";
         return;
     }
     prestamos.forEach(p=>{
@@ -578,7 +588,7 @@ function renderPrestamos(){
             div.innerHTML+=`${it.nombre} - Cantidad: ${it.cantidad}<br>`;
         });
         const btnBorrar = document.createElement("button");
-        btnBorrar.textContent = "Borrar préstamo";
+        btnBorrar.textContent = "Borrar prestamo";
         btnBorrar.onclick = () => borrarPrestamo(p.id);
         div.appendChild(btnBorrar);
         cont.appendChild(div);
@@ -589,23 +599,23 @@ function borrarPrestamo(id){
     let prestamos = JSON.parse(localStorage.getItem("prestamos") || "[]");
     const prestamoBorrado = prestamos.find(p => p.id === id);
     if(!prestamoBorrado) return;
-    if(confirm("¿Seguro que querés borrar este préstamo?")){
+    if(confirm("¿Seguro que queres borrar este prestamo?")){
         actualizarInventario(prestamoBorrado.items, "sumar");
         prestamos = prestamos.filter(p => p.id !== id);
         localStorage.setItem("prestamos", JSON.stringify(prestamos));
         renderPrestamos();
-        alert("Préstamo eliminado y stock restaurado correctamente.");
+        alert("Prestamo eliminado y stock restaurado correctamente.");
     }
 }
 
 const infoHerramientas = {
-  "martillo": {descripcion: "El martillo es una herramienta de mano...",imagen: "https://lh3.googleusercontent.com/a4WZTGEscQuTDOkFOSd9bETU1qhnL9oNpi705Gqa8YfpdneS8c7gPYm_PRw05wvS4SQYJApaRtzC6_oBLQi6bq80sUoza-BM40G0qUn7A6BopIvowWE87WZoVblb5nZ2B_xzfP7t06aX1-UHdnRH7Uk",video: "https://youtu.be/xWhgEimTmHU"},
-  "soldadora electrica": {descripcion: "Una soldadora eléctrica es una herramienta...",imagen: "https://www.dowenpagioweb.com.ar/wp-content/uploads/9991112_WEB-1.jpg", video: "https://youtu.be/PVvhya8ADao"},
-  "mascara de soldar": {descripcion: "Las caretas o máscaras de soldar son elementos...",imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLrs2KT7_YJy8kJcViJV2cMtR5WM_BW2mJCw&s",video: "https://youtu.be/ABtRsKsRHg4"},
+  "martillo": {descripcion: "Una soldadora eléctrica es una herramienta que une piezas de metal fundiendo el material de aporte y/o el metal base a través de la electricidad. Funciona generando calor para derretir un material de relleno que, al enfriarse, crea una unión sólida entre las partes.",imagen: "https://lh3.googleusercontent.com/a4WZTGEscQuTDOkFOSd9bETU1qhnL9oNpi705Gqa8YfpdneS8c7gPYm_PRw05wvS4SQYJApaRtzC6_oBLQi6bq80sUoza-BM40G0qUn7A6BopIvowWE87WZoVblb5nZ2B_xzfP7t06aX1-UHdnRH7Uk",video: "https://youtu.be/xWhgEimTmHU"},
+  "soldadora electrica": {descripcion: "Una soldadora eléctrica es una herramienta que une piezas de metal fundiendo el material de aporte y/o el metal base a través de la electricidad. Funciona generando calor para derretir un material de relleno que, al enfriarse, crea una unión sólida entre las partes.",imagen: "https://www.dowenpagioweb.com.ar/wp-content/uploads/9991112_WEB-1.jpg", video: "https://youtu.be/PVvhya8ADao"},
+  "mascara de soldar": {descripcion: "Una máscara de soldar es un equipo de protección individual que protege la cara, los ojos y la piel de los peligros de la soldadura, como la luz ultravioleta (UV) e infrarroja (IR), chispas y calor. Sirve como una barrera entre el soldador y el arco de soldadura, protegiendo contra quemaduras en la retina, daños en la córnea y otras lesiones visuales. ",imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLrs2KT7_YJy8kJcViJV2cMtR5WM_BW2mJCw&s",video: "https://youtu.be/ABtRsKsRHg4"},
   "lima": {descripcion: "La lima es una herramienta usada para desgastar o dar forma a materiales.",imagen: "https://www.demaquinasyherramientas.com/wp-content/uploads/2011/09/tipos-de-limas.jpg", video: "https://youtu.be/CKKgL_fbj2s"},
-  "destornilladores": { descripcion: "Los destornilladores sirven para ajustar o quitar tornillos.",imagen: "https://www.demaquinasyherramientas.com/wp-content/uploads/2018/03/Destornillador.jpg",video: "https://youtu.be/xR70UR0eJX4"},
-  "guantes": {descripcion: "Los guantes de seguridad protegen las manos durante el trabajo.", imagen: "https://deonce.com.ar/images/detailed/69/9d8b531f-ccad-4e5a-ba67-86028826d05b.jpg",video: "https://youtu.be/q7sUKzHJysc"},
-  "sierra de mano": {descripcion: "La sierra de mano se utiliza para cortar madera u otros materiales.", imagen: "https://png.pngtree.com/png-clipart/20210309/original/pngtree-hand-saw-tool-clipart-png-image_5804981.jpg",video: "https://www.youtube.com/shorts/dJiERdKExnY?feature=share"}
+  "destornilladores": { descripcion: "El destornillador sirve principalmente para apretar o aflojar tornillos al aplicar una fuerza de torsión. Es una herramienta esencial en bricolaje, reparaciones y construcción, y existen diferentes tipos para adaptarse a las diversas ranuras y cabezas de los tornillos, tanto en madera como en metal y plástico. ",imagen: "https://www.demaquinasyherramientas.com/wp-content/uploads/2018/03/Destornillador.jpg",video: "https://youtu.be/xR70UR0eJX4"},
+  "guantes": {descripcion: "Los guantes de trabajo sirven para proteger las manos de los trabajadores contra diversos riesgos, como cortes, abrasiones, quemaduras, productos químicos, descargas eléctricas y temperaturas extremas.", imagen: "https://deonce.com.ar/images/detailed/69/9d8b531f-ccad-4e5a-ba67-86028826d05b.jpg",video: "https://youtu.be/q7sUKzHJysc"},
+  "sierra de mano": {descripcion: "La sierra es una herramienta que se utiliza para cortar madera, metales y otros tipos de materiales. Es una hoja de filo con una especie de serrucho. Puede ser manual o eléctrica, según el caso.", imagen: "https://png.pngtree.com/png-clipart/20210309/original/pngtree-hand-saw-tool-clipart-png-image_5804981.jpg",video: "https://www.youtube.com/shorts/dJiERdKExnY?feature=share"}
 };
 
 function mostrarHerramientasAlumno(){
@@ -629,17 +639,17 @@ window.onload=()=>{
     cargarInventario(); 
 };
 
-// Función del botón de música global
+
 function toggleMusica() {
   const musica = document.getElementById("musicaFondo");
   const boton = document.getElementById("btnMusica");
 
   if (musica.paused) {
     musica.play();
-    boton.textContent = "⏸️ Pausar música";
+    boton.textContent = "⏸️ Pausar musica";
   } else {
     musica.pause();
-    boton.textContent = "▶️ Reanudar música";
+    boton.textContent = "▶️ Reanudar musica";
   }
 }
 </script>
