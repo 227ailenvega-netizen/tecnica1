@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pañol - Escuela Técnica N°1</title>
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Poppins", sans-serif;
+}
+
+.fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px 30px;
+    background-color: rgba(245, 222, 179, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+h1, h3 {
+    color: #4b0082;
+    text-align: center;
+}
+input, select, button {
+    width: 90%;
+    margin: 8px 0;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+}
+button {
+    cursor: pointer;
+    border: none;
+    background-color: #6a11cb;
+    color: white;
+}
+button:hover { background-color: #2575fc; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+th {
+    background-color: #6a11cb;
+    color: rgb(241, 239, 239);
+}
+.item-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 8px 0;
+}
+.tarjeta {
+    background: #f3f3ff;
+    border-left: 5px solid #6a11cb;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+.pantalla {
+    display: none;
+    min-height: 100vh;
+}
+.tarjeta-alumno {
+    border: 1px solid #6a11cb;
+    border-radius: 8px;
+    padding: 10px;
+    width: 200px;
+    background: #f3f3ff;
+    text-align: center;
+}
+.tarjeta-alumno img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+}
+
+#pantallaAlumno {
+    position: relative;
+    text-align: center;
+    color: #3e2f1c;
+    font-family: "Segoe UI", sans-serif;
+    background-image: url("https://img.pikbest.com/wp/202344/appeal-wooden-backdrop-enhances-the-aesthetic-of-tool-set_9923097.jpg!w700wp");
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    padding-top: 30px;
+}
+
+#pantallaAlumno .contenedorAlumno {
+    background: rgba(165, 117, 70, 0.75);
+    padding: 30px;
+    border-radius: 15px;
+    width: 80%;
+    margin: 60px auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#pantallaAlumno h1 {
+    font-size: 2em;
+    color: #fffaf3;
+}
+
+#pantallaAlumno img {
+    width: 180px;
+    height: auto;
+    margin: 15px;
+    border-radius: 12px;
+    transition: transform 0.3s;
+}
+
+#pantallaAlumno img:hover {
+    transform: scale(1.1);
+}
+
+#videoAlumno {
+    margin-top: 25px;
+    border: 3px solid #d9c4a1;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 700px;
+    height: 390px;
+}
+
+#pantallaTipo {
+    background-image: url("https://cdn.pixabay.com/photo/2016/03/15/02/42/floor-1256804_1280.jpg");
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#pantallaTipo .container {
+    background-color: rgba(181, 140, 99, 0.85);
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    color: white;
+}
+
+#btnMusicaAlumno {
+  background-color: rgba(181, 140, 99, 0.85);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-top: 15px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+#btnMusicaAlumno:hover {
+  background-color: rgba(145, 112, 79, 0.9);
+}
+
+#btnMusica {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 6px 12px;
+    font-size: 0.9em;
+    border-radius: 8px;
+    border: none;
+    background-color: rgba(181, 140, 99, 0.85);
+    color: white;
+    cursor: pointer;
+}
+
+#btnMusica:hover {
+    background-color: rgba(145, 112, 79, 0.9);
+}
+
+/* ---------------- RESPONSIVE PARA CELULAR ---------------- */
+@media (max-width: 768px) {
+    .container {
+        width: 90% !important;
+        padding: 15px !important;
+        margin: 15px auto !important;
+    }
+
+    input, select, button {
+        width: 100% !important;
+        font-size: 0.95em !important;
+    }
+
+    table, th, td {
+        font-size: 0.8em !important;
+    }
+
+    .item-row {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .tarjeta-alumno {
+        width: 100% !important;
+    }
+
+    #videoAlumno {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    #pantallaAlumno .contenedorAlumno {
+        width: 95% !important;
+        padding: 15px !important;
+        margin: 30px auto !important;
+    }
+
+    #pantallaTipo .container, #pantallaPrincipal .container {
+        width: 95% !important;
+    }
+
+    h1, h3 {
+        font-size: 1.5em !important;
+    }
+
+    #btnMusica {
+        font-size: 0.8em !important;
+        padding: 5px 10px !important;
+    }
+}
+</style> 
+</head>
+<body>
+
+<div class="pantalla" id="pantallaBienvenida">
+    <video class="fondo" autoplay muted loop>
+        <source src="img/istockphoto-1253555354-640_adpp_is (1).mp4" type="video/mp4">
+    </video>
+    <div class="container" style="text-align:center;">
+        <h1>Bienvenido/a al Pañol - Escuela Técnica N°1</h1>
+        <button onclick="mostrarPantalla('pantallaTipo')">Iniciar</button>
+    </div>
+</div>
+
+
+<div class="pantalla" id="pantallaTipo">
+    <video class="fondo" autoplay muted loop>
+        <source src="tp.html/img/istockphoto-1253555354-640_adpp_is (1).mp4" type="video/mp4">
+    </video>
+    <div class="container" style="text-align:center;">
+        <h1>¿Quién está ingresando?</h1>
+        <button onclick="seleccionarTipo('docente')">👩‍🏫 Docente</button>
+        <button onclick="seleccionarTipo('alumno')">👨‍🎓 Alumno</button>
+    </div>
+</div>
+
+
+<div class="pantalla" id="crearUsuario">
+    <video class="fondo" autoplay muted loop>
+        <source src="img/istockphoto-1253555354-640_adpp_is (1).mp4" type="video/mp4">
+    </video>
+    <div class="container">
+        <h1>Crear Usuario</h1>
+        <input type="text" id="nombreUsuario" placeholder="Nombre de usuario" required><br>
+        <input type="text" id="nombre" placeholder="Nombre real" required><br>
+        <input type="text" id="apellido" placeholder="Apellido" required><br>
+        <input type="number" id="edad" placeholder="Edad" required><br>
+        <input type="password" id="password" placeholder="Crear contraseña (mínimo 8 caracteres)"><br>
+        <button onclick="registrarUsuario()">Guardar Usuario</button><br>
+        <button onclick="mostrarPantalla('iniciarSesion')">¿Ya tenés usuario?</button>
+    </div>
+</div>
+
+
+<div class="pantalla" id="iniciarSesion">
+    <video class="fondo" autoplay muted loop>
+        <source src="img/istockphoto-1253555354-640_adpp_is (1).mp4" type="video/mp4">
+    </video>
+    <div class="container">
+        <h1>Iniciar Sesión</h1>
+        <input type="text" id="usuarioLogin" placeholder="Nombre de usuario"><br>
+        <input type="password" id="passwordLogin" placeholder="Contraseña"><br>
+        <button onclick="iniciarSesion()">Ingresar</button><br><br>
+        <button onclick="mostrarPantalla('pantallaTipo')">Volver</button><br><br>
+        <button onclick="borrarUsuario()">🗑️ Borrar usuario</button>
+    </div>
+</div>
+
+
+<div class="pantalla" id="pantallaPrincipal">
+    <img class="fondo" src="https://img.pikbest.com/wp/202344/appeal-wooden-backdrop-enhances-the-aesthetic-of-tool-set_9923097.jpg!w700wp" alt="Fondo herramientas">
+    <div class="container">
+        <h1>Pañol - Técnica N°1</h1>
+        <p>Encargado: <span id="usuarioActual"></span></p>
+        <button onclick="cerrarSesion()">Cerrar sesión</button>
+        <button onclick="borrarUsuario()">🗑️ Borrar usuario</button>
+        <hr>
+        <h3>Inventario actual</h3>
+        <table id="tablaInventario">
+            <thead><tr><th>Herramienta</th><th>Categoría</th><th>Stock</th></tr></thead>
+            <tbody></tbody>
+        </table>
+        <hr>
+        <h3>Registrar préstamo</h3>
+        <input type="text" id="profesor" placeholder="Profesor a cargo">
+        <input type="text" id="curso" placeholder="Curso o grupo">
+        <div id="prestamoItems"></div>
+        <button onclick="agregarFila()">➕ Agregar herramienta</button>
+        <button onclick="guardarPrestamo()">💾 Guardar préstamo</button>
+        <h3>Préstamos guardados</h3>
+        <div id="listaPrestamos"></div>
+    </div>
+</div>
+
+
+<div class="pantalla" id="pantallaAlumno">
+    <div class="container">
+        <h1>Bienvenido, <span id="usuarioActualAlumno"></span></h1>
+        <button onclick="cerrarSesionAlumno()">Cerrar sesión</button>
+        <button onclick="borrarUsuario()">🗑️ Borrar usuario</button>
+        <hr>
+        <h3>Herramientas disponibles</h3>
+        <div id="herramientasAlumno" style="display:flex; flex-wrap: wrap; gap:10px;"></div>
+    </div>
+</div>
+
+
+<audio id="musicaFondo" autoplay loop>
+  <source src="img/intro-184995.mp3" type="audio/mpeg">
+</audio>
+
+
+<button id="btnMusica" onclick="toggleMusica()">⏸️</button>
+
+<script>
+let tipoUsuario = null;
+const inventarioBase = [
+    { nombre:"martillo", categoria:"Herramienta", stock:20},
+    { nombre:"soldadora electrica", categoria:"Herramienta", stock:20},
+    { nombre:"mascara de soldar", categoria:"Indumentaria", stock:20 },
+    { nombre:"lima", categoria:"Herramienta", stock:15},
+    { nombre:"destornilladores", categoria:"Herramienta", stock:20 },
+    { nombre:"guantes", categoria:"Indumentaria", stock:20 },
+    { nombre:"sierra de mano", categoria:"Herramienta", stock:20}
+];
+
+function cargarInventario(){
+    let inv = JSON.parse(localStorage.getItem("inventario"));
+    if(!inv){ inv = inventarioBase; localStorage.setItem("inventario", JSON.stringify(inv)); }
+    return inv;
+}
+function guardarInventario(data){ localStorage.setItem("inventario", JSON.stringify(data)); }
+
+function mostrarPantalla(id){
+    document.querySelectorAll(".pantalla").forEach(p=>p.style.display="none");
+    document.getElementById(id).style.display="block";
+
+    const audio = document.getElementById("musicaFondo");
+    if(id === "pantallaBienvenida"){
+        audio.pause();
+    } else {
+        audio.play();
+    }
+
+    if(id==="iniciarSesion"){
+        document.getElementById("usuarioLogin").value="";
+        document.getElementById("passwordLogin").value="";
+    }
+}
+
+function seleccionarTipo(tipo){ tipoUsuario = tipo; mostrarPantalla("crearUsuario"); }
+function obtenerUsuarios(tipo){
+    const clave = tipo==="docente" ? "usuariosDocentes" : "usuariosAlumnos";
+    return JSON.parse(localStorage.getItem(clave) || "[]");
+}
+function guardarUsuarios(tipo, lista){
+    const clave = tipo==="docente" ? "usuariosDocentes" : "usuariosAlumnos";
+    localStorage.setItem(clave, JSON.stringify(lista));
+}
+function registrarUsuario(){
+    const nombreUsuario=document.getElementById("nombreUsuario").value.trim();
+    const nombre=document.getElementById("nombre").value.trim();
+    const apellido=document.getElementById("apellido").value.trim();
+    const edad=document.getElementById("edad").value.trim();
+    const password=document.getElementById("password").value.trim();
+    if(!nombreUsuario||!nombre||!apellido||!edad||!password){ alert("Completa todos los campos"); return;}
+    if(password.length<8){ alert("Contraseña muy corta"); return;}
+    const usuarios=obtenerUsuarios(tipoUsuario);
+    if(usuarios.find(u=>u.nombreUsuario===nombreUsuario)){ alert("Ese nombre de usuario ya existe."); return;}
+    usuarios.push({nombreUsuario,nombre,apellido,edad,password});
+    guardarUsuarios(tipoUsuario,usuarios);
+    alert("Usuario creado correctamente");
+    mostrarPantalla("iniciarSesion");
+}
+function iniciarSesion() {
+    const usuarioLogin = document.getElementById("usuarioLogin").value.trim();
+    const passwordLogin = document.getElementById("passwordLogin").value.trim();
+
+    if (!usuarioLogin || !passwordLogin) {
+        alert("Por favor, completá todos los campos.");
+        return;
+    }
+
+    if (!tipoUsuario) {
+        alert("Primero seleccioná si sos docente o alumno.");
+        mostrarPantalla("pantallaTipo");
+        return;
+    }
+
+    const usuariosDocentes = obtenerUsuarios("docente");
+    const usuariosAlumnos = obtenerUsuarios("alumno");
+
+    const esDocente = usuariosDocentes.find(u => u.nombreUsuario === usuarioLogin && u.password === passwordLogin);
+    const esAlumno = usuariosAlumnos.find(u => u.nombreUsuario === usuarioLogin && u.password === passwordLogin);
+
+    if (tipoUsuario === "docente" && esAlumno) {
+        alert("⚠️ Este usuario pertenece al grupo de alumnos. Inicia sesión como alumno.");
+        return;
+    }
+    if (tipoUsuario === "alumno" && esDocente) {
+        alert("⚠️ Este usuario pertenece al grupo de docentes. Inicia sesión como docente.");
+        return;
+    }
+
+    const encontrado = tipoUsuario === "docente" ? esDocente : esAlumno;
+    if (!encontrado) {
+        alert("Usuario o contraseña incorrectos.");
+        return;
+    }
+
+    if (tipoUsuario === "docente") {
+        document.getElementById("usuarioActual").textContent = `${encontrado.nombre} ${encontrado.apellido}`;
+        mostrarPantalla("pantallaPrincipal");
+        renderInventario();
+        renderPrestamos();
+    } else {
+        document.getElementById("usuarioActualAlumno").textContent = encontrado.nombreUsuario;
+        mostrarPantalla("pantallaAlumno");
+        mostrarHerramientasAlumno();
+    }
+}
+
+function borrarUsuario(){
+    if(!tipoUsuario){ alert("No se detectó tipo de usuario."); return; }
+    const usuarios=obtenerUsuarios(tipoUsuario);
+    const nombreUsuarioActual=prompt("Escribí el nombre de usuario que querés borrar:");
+    const nuevosUsuarios=usuarios.filter(u=>u.nombreUsuario!==nombreUsuarioActual);
+    if(usuarios.length===nuevosUsuarios.length){ alert("No se encontró ese usuario."); return; }
+    guardarUsuarios(tipoUsuario,nuevosUsuarios);
+    alert("Usuario eliminado correctamente.");
+    mostrarPantalla("pantallaTipo");
+}
+function cerrarSesion(){ mostrarPantalla("pantallaTipo"); }
+function cerrarSesionAlumno(){ mostrarPantalla("pantallaTipo"); }
+
+function renderInventario(){
+    const tabla=document.querySelector("#tablaInventario tbody");
+    tabla.innerHTML="";
+    cargarInventario().forEach(item=>{
+        const row=document.createElement("tr");
+        row.innerHTML=`<td>${item.nombre}</td><td>${item.categoria}</td><td>${item.stock}</td>`;
+        tabla.appendChild(row);
+    });
+}
+
+function agregarFila(){
+    const cont=document.getElementById("prestamoItems");
+    const inv = cargarInventario();
+    const div=document.createElement("div");
+    div.classList.add("item-row");
+    const selectHerr = document.createElement("select");
+    selectHerr.classList.add("herramienta");
+    const opcionDefault = document.createElement("option");
+    opcionDefault.value = "";
+    opcionDefault.textContent = "Seleccionar herramienta";
+    selectHerr.appendChild(opcionDefault);
+    inv.forEach(i=>{
+        const opt = document.createElement("option");
+        opt.value = i.nombre;
+        opt.textContent = `${i.nombre} (Stock: ${i.stock})`;
+        selectHerr.appendChild(opt);
+    });
+    const inputCant = document.createElement("input");
+    inputCant.type = "number";
+    inputCant.classList.add("cantidad");
+    inputCant.placeholder = "Cantidad";
+    inputCant.min = 1;
+    const btnBorrar = document.createElement("button");
+    btnBorrar.textContent = "❌";
+    btnBorrar.onclick = () => div.remove();
+    div.appendChild(selectHerr);
+    div.appendChild(inputCant);
+    div.appendChild(btnBorrar);
+    cont.appendChild(div);
+}
+
+function guardarPrestamo() {
+    const profesor = document.getElementById("profesor").value.trim();
+    const curso = document.getElementById("curso").value.trim();
+    const items = Array.from(document.querySelectorAll("#prestamoItems .item-row")).map(r => ({
+        nombre: r.querySelector(".herramienta").value,
+        cantidad: parseInt(r.querySelector(".cantidad").value)
+    }));
+
+    if (!profesor|| !curso || items.length == 0) {
+        alert("Completa todos los campos");
+        return;
+    }
+    if (items.some(i => !i.nombre || !i.cantidad || i.cantidad <= 0)) {
+        alert("Selecciona herramienta y cantidad válida.");
+        return;
+    }
+
+    const inventario = cargarInventario();
+    for (let i of items) {
+        const herramienta = inventario.find(h => h.nombre.toLowerCase() === i.nombre.toLowerCase());
+        if (!herramienta) continue;
+        if (i.cantidad > herramienta.stock) {
+            alert(`❌ No hay suficiente stock de "${herramienta.nombre}". Solo quedan ${herramienta.stock}.`);
+            return; 
+        }
+    }
+
+    let prestamos = JSON.parse(localStorage.getItem("prestamos") || "[]");
+    prestamos.push({ id: Date.now(), profesor, curso, items });
+    localStorage.setItem("prestamos", JSON.stringify(prestamos));
+
+    actualizarInventario(items, "restar");
+    renderPrestamos();
+    document.getElementById("prestamoItems").innerHTML = "";
+}
+
+function actualizarInventario(items, accion = "restar") {
+    const inv = cargarInventario();
+    items.forEach(i => {
+        const tool = inv.find(t => t.nombre.toLowerCase() === i.nombre.toLowerCase());
+        if (tool) {
+            if (accion === "restar") {
+                tool.stock -= i.cantidad;
+                if (tool.stock < 0) tool.stock = 0;
+            } else if (accion === "sumar") {
+                tool.stock += i.cantidad;
+            }
+        }
+    });
+    guardarInventario(inv);
+    renderInventario();
+}
+
+function renderPrestamos(){
+    const cont=document.getElementById("listaPrestamos");
+    cont.innerHTML="";
+    const prestamos=JSON.parse(localStorage.getItem("prestamos")||"[]");
+    if(prestamos.length===0){
+        cont.innerHTML="<p>No hay préstamos registrados.</p>";
+        return;
+    }
+    prestamos.forEach(p=>{
+        const div=document.createElement("div");
+        div.classList.add("tarjeta");
+        div.innerHTML=`<strong>Profesor:</strong> ${p.profesor}<br>
+                       <strong>Curso:</strong> ${p.curso}<br>`;
+        p.items.forEach(it=>{
+            div.innerHTML+=`${it.nombre} - Cantidad: ${it.cantidad}<br>`;
+        });
+        const btnBorrar = document.createElement("button");
+        btnBorrar.textContent = "Borrar préstamo";
+        btnBorrar.onclick = () => borrarPrestamo(p.id);
+        div.appendChild(btnBorrar);
+        cont.appendChild(div);
+    });
+}
+
+function borrarPrestamo(id){
+    let prestamos = JSON.parse(localStorage.getItem("prestamos") || "[]");
+    const prestamoBorrado = prestamos.find(p => p.id === id);
+    if(!prestamoBorrado) return;
+    if(confirm("¿Seguro que querés borrar este préstamo?")){
+        actualizarInventario(prestamoBorrado.items, "sumar");
+        prestamos = prestamos.filter(p => p.id !== id);
+        localStorage.setItem("prestamos", JSON.stringify(prestamos));
+        renderPrestamos();
+        alert("Préstamo eliminado y stock restaurado correctamente.");
+    }
+}
+
+const infoHerramientas = {
+  "martillo": {descripcion: "El martillo es una herramienta de mano...",imagen: "https://lh3.googleusercontent.com/a4WZTGEscQuTDOkFOSd9bETU1qhnL9oNpi705Gqa8YfpdneS8c7gPYm_PRw05wvS4SQYJApaRtzC6_oBLQi6bq80sUoza-BM40G0qUn7A6BopIvowWE87WZoVblb5nZ2B_xzfP7t06aX1-UHdnRH7Uk",video: "https://youtu.be/xWhgEimTmHU"},
+  "soldadora electrica": {descripcion: "Una soldadora eléctrica es una herramienta...",imagen: "https://www.dowenpagioweb.com.ar/wp-content/uploads/9991112_WEB-1.jpg", video: "https://youtu.be/PVvhya8ADao"},
+  "mascara de soldar": {descripcion: "Las caretas o máscaras de soldar son elementos...",imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLrs2KT7_YJy8kJcViJV2cMtR5WM_BW2mJCw&s",video: "https://youtu.be/ABtRsKsRHg4"},
+  "lima": {descripcion: "La lima es una herramienta usada para desgastar o dar forma a materiales.",imagen: "https://www.demaquinasyherramientas.com/wp-content/uploads/2011/09/tipos-de-limas.jpg", video: "https://youtu.be/CKKgL_fbj2s"},
+  "destornilladores": { descripcion: "Los destornilladores sirven para ajustar o quitar tornillos.",imagen: "https://www.demaquinasyherramientas.com/wp-content/uploads/2018/03/Destornillador.jpg",video: "https://youtu.be/xR70UR0eJX4"},
+  "guantes": {descripcion: "Los guantes de seguridad protegen las manos durante el trabajo.", imagen: "https://deonce.com.ar/images/detailed/69/9d8b531f-ccad-4e5a-ba67-86028826d05b.jpg",video: "https://youtu.be/q7sUKzHJysc"},
+  "sierra de mano": {descripcion: "La sierra de mano se utiliza para cortar madera u otros materiales.", imagen: "https://png.pngtree.com/png-clipart/20210309/original/pngtree-hand-saw-tool-clipart-png-image_5804981.jpg",video: "https://www.youtube.com/shorts/dJiERdKExnY?feature=share"}
+};
+
+function mostrarHerramientasAlumno(){
+    const cont=document.getElementById("herramientasAlumno");
+    cont.innerHTML="";
+    cargarInventario().forEach(item=>{
+        const info=infoHerramientas[item.nombre]; if(!info)return;
+        const card=document.createElement("div");
+        card.classList.add("tarjeta-alumno");
+        card.innerHTML=`<h4>${item.nombre}</h4>
+                        <p><strong>Stock:</strong> ${item.stock}</p>
+                        <img src="${info.imagen}" alt="${item.nombre}">
+                        <p>${info.descripcion}</p>
+                        <a href="${info.video}" target="_blank" style="display:inline-block;margin-top:8px;background:#6a11cb;color:#fff;padding:6px 10px;border-radius:6px;text-decoration:none;">🎥 Ver video</a>`;
+        cont.appendChild(card);
+    });
+}
+
+window.onload=()=>{ 
+    mostrarPantalla("pantallaBienvenida"); 
+    cargarInventario(); 
+};
+
+// Función del botón de música global
+function toggleMusica() {
+  const musica = document.getElementById("musicaFondo");
+  const boton = document.getElementById("btnMusica");
+
+  if (musica.paused) {
+    musica.play();
+    boton.textContent = "⏸️ Pausar música";
+  } else {
+    musica.pause();
+    boton.textContent = "▶️ Reanudar música";
+  }
+}
+</script>
+</body>
+</html>
